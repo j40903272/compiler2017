@@ -1,0 +1,20 @@
+i a
+i b
+i c
+f d
+f e
+f g
+a = 1
+b = 2
+d = 1.0
+e = 2.0
+c = a / b
+p c
+c = a * b
+p c
+g = d / e
+p g
+g = d * e
+p g
+g = d / e * 2.0
+p g

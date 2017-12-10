@@ -1,0 +1,14 @@
+i a
+f b
+i c
+i dd
+a = 1
+b = 2.1 + a / 2
+p b
+c = 1
+dd = 2
+c = 3 * 5 + 2 / 2 - a
+p c
+p dd
+b = 2.1 + a / 2 * c + dd
+p b

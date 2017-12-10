@@ -1,0 +1,17 @@
+i averylongvariable
+f anotherverylongvariable
+i vc
+f vd
+i ve
+averylongvariable = 1
+anotherverylongvariable = 2.0
+vc = 3
+vd = anotherverylongvariable + anotherverylongvariable
+ve = vc + 2
+p averylongvariable
+p anotherverylongvariable
+p vc
+p vd
+p ve
+vc = ve - vc + averylongvariable + averylongvariable + averylongvariable + averylongvariable
+p vc
