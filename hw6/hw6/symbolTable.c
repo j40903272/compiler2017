@@ -80,7 +80,6 @@ void initializeSymbolTable()
     intAttribute->attr.typeDescriptor = (TypeDescriptor*)malloc(sizeof(TypeDescriptor));
     intAttribute->attr.typeDescriptor->kind = SCALAR_TYPE_DESCRIPTOR;
     intAttribute->attr.typeDescriptor->properties.dataType = INT_TYPE;
-    intAttribute->offsetInAR = -1;
     enterSymbol(SYMBOL_TABLE_INT_NAME, intAttribute);
 
     SymbolAttribute* floatAttribute = (SymbolAttribute*)malloc(sizeof(SymbolAttribute));
@@ -88,7 +87,6 @@ void initializeSymbolTable()
     floatAttribute->attr.typeDescriptor = (TypeDescriptor*)malloc(sizeof(TypeDescriptor));
     floatAttribute->attr.typeDescriptor->kind = SCALAR_TYPE_DESCRIPTOR;
     floatAttribute->attr.typeDescriptor->properties.dataType = FLOAT_TYPE;
-    floatAttribute->offsetInAR = -1;
     enterSymbol(SYMBOL_TABLE_FLOAT_NAME, floatAttribute);
 
     SymbolAttribute* voidAttribute = (SymbolAttribute*)malloc(sizeof(SymbolAttribute));
@@ -96,7 +94,6 @@ void initializeSymbolTable()
     voidAttribute->attr.typeDescriptor = (TypeDescriptor*)malloc(sizeof(TypeDescriptor));
     voidAttribute->attr.typeDescriptor->kind = SCALAR_TYPE_DESCRIPTOR;
     voidAttribute->attr.typeDescriptor->properties.dataType = VOID_TYPE;
-    voidAttribute->offsetInAR = -1;
     enterSymbol(SYMBOL_TABLE_VOID_NAME, voidAttribute);
 
     SymbolAttribute* readAttribute = NULL;
@@ -106,7 +103,6 @@ void initializeSymbolTable()
     readAttribute->attr.functionSignature->returnType = INT_TYPE;
     readAttribute->attr.functionSignature->parameterList = NULL;
     readAttribute->attr.functionSignature->parametersCount = 0;
-    readAttribute->offsetInAR = -1;
     enterSymbol(SYMBOL_TABLE_SYS_LIB_READ, readAttribute);
 
     SymbolAttribute* freadAttribute = NULL;
@@ -116,7 +112,6 @@ void initializeSymbolTable()
     freadAttribute->attr.functionSignature->returnType = FLOAT_TYPE;
     freadAttribute->attr.functionSignature->parameterList = NULL;
     freadAttribute->attr.functionSignature->parametersCount = 0;
-    freadAttribute->offsetInAR = -1;
     enterSymbol(SYMBOL_TABLE_SYS_LIB_FREAD, freadAttribute);
 }
 
@@ -311,38 +306,4 @@ void closeScope()
     symbolTable.scopeDisplay[symbolTable.currentLevel] = NULL;
     //
     --symbolTable.currentLevel;
-}
-
-
-int isGlobalVariable(SymbolTableEntry* symbolTableEntry)
-{
-    return symbolTableEntry->nestingLevel == 0;
-}
-
-
-int getVariableSize(TypeDescriptor *typeDescriptor)
-{
-    if(typeDescriptor->kind == SCALAR_TYPE_DESCRIPTOR)
-    {
-        //INT_TYPE and FLOAT_TYPE
-        return 4;
-    }
-    else if(typeDescriptor->kind == ARRAY_TYPE_DESCRIPTOR)
-    {
-        ArrayProperties* arrayPropertiesPtr = &(typeDescriptor->properties.arrayProperties);
-        
-        int arrayElementCount = 1;
-        int index = 0;
-        for(index = 0; index < arrayPropertiesPtr->dimension; ++index)
-        {
-            arrayElementCount *= arrayPropertiesPtr->sizeInEachDimension[index];
-        }
-
-        return arrayElementCount * 4;
-    }
-    else
-    {
-        printf("Error in int getVariableSize(TypeDescriptor *typeDescriptor)\n");
-        return -1;
-    }
 }
